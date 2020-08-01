@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<h2>AVAILABLE TABLES</h2>
+{% if table_list %}
+    <ul>
+    {% for table in table_list %}
+        <li><a href="{% url 'tables:detail' table.id %}">{{ table.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tables are available.</p>
+{% endif %}
+</body>
+</html>
