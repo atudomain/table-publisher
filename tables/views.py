@@ -41,6 +41,7 @@ class TableViewSet(viewsets.ModelViewSet):
         table.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class RowViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows rows to be viewed or edited.

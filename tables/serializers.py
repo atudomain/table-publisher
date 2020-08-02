@@ -5,22 +5,27 @@ from .models import Table, Row, Column
 class ColumnSerializer(serializers.ModelSerializer):
     class Meta:
         model = Column
-        fields = ['id', 'name', 'value']
+        fields = ['name', 'value']
 
 
 class RowSerializer(serializers.ModelSerializer):
-    columns = serializers.SerializerMethodField()
+    columns = ColumnSerializer(many=True)
     class Meta:
         model = Row
-        fields = ['id', 'columns']
-    def get_columns(self, obj):
-        return ColumnSerializer(obj.columns.all(), many=True, read_only=True).data
+        fields = ['columns']
 
 
 class TableSerializer(serializers.ModelSerializer):
-    rows = serializers.SerializerMethodField()
+    rows = RowSerializer(many=True)
     class Meta:
         model = Table
-        fields = ['id', 'name', 'rows']
-    def get_rows(self, obj):
-        return RowSerializer(obj.rows.all(), many=True, read_only=True).data
+        fields = ['name', 'rows']
+    def create(self, validated_data):
+        rows_data = validated_data.pop('rows')
+        table = Table.objects.create(**validated_data)
+        for row_data in rows_data:
+            row = Row.objects.create(table=table)
+            columns_data = row_data.pop('columns')
+            for column_data in columns_data:
+                Column.objects.create(row=row, **column_data)
+        return table
