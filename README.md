@@ -37,3 +37,9 @@ curl -d '{
 ```
 curl -X "DELETE" http://127.0.0.1:8000/api/tables/sample_table/
 ```
+
+## Build image
+
+```
+docker build -t my-image-name .
+```
