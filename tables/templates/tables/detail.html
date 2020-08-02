@@ -25,13 +25,13 @@ tr:nth-child(even) {
 
 <table>
 <tr>
-{% for column in table.row_set.first.column_set.all %}
+{% for column in table.rows.first.columns.all %}
 <th>{{ column.name }}</th>
 {% endfor %}
 </tr>
-{% for row in table.row_set.all %}
+{% for row in table.rows.all %}
   <tr>
-  {% for column in row.column_set.all %}
+  {% for column in row.columns.all %}
     <td>{{ column.value }}</td>
   {% endfor %}
   </tr>
