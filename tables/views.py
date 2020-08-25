@@ -20,6 +20,8 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Table
     template_name = 'tables/detail.html'
+    slug_url_kwarg = 'the_slug'
+    slug_field = 'name'
 
 
 class TableViewSet(viewsets.ModelViewSet):
